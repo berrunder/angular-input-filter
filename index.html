@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input check</title>
+    <style>
+        .ng-hide {
+            display: none !important;
+        }
+
+        .input-error {
+            border: 1px solid red;
+        }
+
+        .info {
+            font-size: smaller;
+            color: #a2292c;
+        }
+
+        .ctrl-group {
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="myApp">
+    <div class="wrapper" ng-controller="MyCtrl">
+        <form novalidate name="form">
+            <div class="ctrl-group">
+                <label> VIN-номер
+                <input ng-class="{'input-error': !form.vin.$valid}" type='text' name="vin"
+                       ng-model="vin"
+                       ng-maxlength="17"
+                       ng-minlength="17"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       vin-input />
+                </label>
+                <div class="info ng-hide" ng-show="form.vin.$error.vin">VIN должен содержать только латиницу, цифры и заглавные буквы.</div>
+                <div class="info ng-hide" ng-show="form.vin.$error.minlength || form.vin.$error.maxlength">VIN должен содержать ровно 17 знаков.</div>
+            </div>
+
+            <div class="ctrl-group">
+                <label> Водительские права
+                <input ng-class="{'input-error': !form.license.$valid}" type='text' name="license"
+                       ng-model="sts"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="12 ХХ 123456"
+                       license />
+                </label>
+                <div class="info ng-hide" ng-show="form.license.$error.license">Лицензия должна соответствовать шаблону 12 ХХ 123456, только цифры и кириллица</div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
